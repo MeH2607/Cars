@@ -18,7 +18,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Entity
 @Table(name = "Member")
-public class Member {
+public class Member extends AdminDetails{
 
     @Id
     @Column(name = "username", unique = true, nullable = false)
@@ -41,11 +41,6 @@ public class Member {
     private boolean approved;
     private int ranking;
 
-    @CreationTimestamp
-    private LocalDate created;
-
-    @UpdateTimestamp
-    private LocalDate lastEdited;
 
     public Member(String user, String password, String email, String firstName,
                   String lastName, String street, String city, String zip) {
