@@ -47,19 +47,21 @@ class MemberController {
 
     //Security = admin (hvis bruger skal kunne gøre det skal det køres på en anden måde
     @PutMapping("/{username}")
-    ResponseEntity<Boolean> editMember(@RequestBody MemberRequest body, @PathVariable String username) {
-        return null;
+   void editMember(@RequestBody MemberRequest body, @PathVariable String username) {
+      memberService.editMember(body,username);
+
     }
 
-    //Security ????
-    @PatchMapping("/ranking/{username}/{value}")
-    ResponseEntity<Boolean> setRankingForUser(@PathVariable String username, @PathVariable int value) {
-    return null;
-    }
+  //Security ADMIN
+  @PatchMapping("/ranking/{username}/{value}")
+  void setRankingForUser(@PathVariable String username, @PathVariable int value) {
+    memberService.setRankingForUser(username,value);
+  }
 
-    // Security ????
-    @DeleteMapping("/{username}")
-    void deleteMemberByUsername(@PathVariable String username) {
-    }
+  // Security ADMIN
+  @DeleteMapping("/{username}")
+  void deleteMemberByUsername(@PathVariable String username) {
+    memberService.deleteMemberByUsername(username);
+  }
 
 }
