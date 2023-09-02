@@ -24,13 +24,24 @@ public class CarController {
         return carService.getCars(false);
     }
 
-    @GetMapping(path="/{brand}")
-    CarResponse getCarsByBrand(@PathVariable String brand) throws Exception{
-        return carService.getCarsByBrand(brand);
+    @GetMapping(path="/{id}")
+    CarResponse getCarsByBrand(@PathVariable int id) throws Exception{
+        return carService.getCarsById(id);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     CarResponse addCar(@RequestBody CarRequest body){
-        return carService.addCar(body)
+        return carService.addCar(body);
     }
+
+    @PutMapping("/{id}")
+    void editCar(@RequestBody CarRequest body, @PathVariable int id){
+        carService.editCar(body,id);
+    }
+
+    @DeleteMapping("/{id}")
+    void deleteCar(@PathVariable int id){
+        carService.deleteCar(id);
+    }
+
 }
