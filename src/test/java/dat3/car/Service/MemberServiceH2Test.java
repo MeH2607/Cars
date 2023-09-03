@@ -18,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 class MemberServiceH2Test {
+    //didn't get to make all the tests in time, but the basework is made in CarServiceTest
 
     @Autowired
     MemberRepository memberRepository;
