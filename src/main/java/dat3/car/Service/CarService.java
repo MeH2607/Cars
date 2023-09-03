@@ -21,7 +21,7 @@ public class CarService {
 
         List<Car> cars = carRepository.findAll();
 
-        return cars.stream().map((car -> new CarResponse(car, false))).toList();
+        return cars.stream().map((car -> new CarResponse(car, includeAll))).toList();
     }
 
     public CarResponse getCarsById(int id) {
@@ -55,7 +55,7 @@ public class CarService {
     }
 
     private Car getCarById(int id){
-        return carRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"Member with this username does not exist"));
+        return carRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"Car with this Id does not exist"));
 
     }
 }
