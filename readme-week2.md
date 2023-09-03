@@ -1,8 +1,12 @@
-##What are the benefits of using a RESTful API
+## What are the benefits of using a RESTful API
+Restful api makes it very easy to set up API endpoints. With http methods like GET or PUT, it's easy to set up endpoints with CRUD functionalities.
+Rest lets you have a stateless database that makes it easily expandable with distributed database systems.
 
-##What is JSON, and why does JSON fit so well with REST?
+## What is JSON, and why does JSON fit so well with REST?
+JSON is a format to send and recieve data. The structure of JSON fits well with Rest cause you're able to send and recieve lists of data together and you can costumize what data you want to send or recieve for ressources.
 
 ## How you have designed simple CRUD endpoints using spring boot and DTOs to separate api from data  -> Focus on your use of DTO's
+The way I used DTOs is to have a "response" and a "request" DTO for each entity. The request DTO...
 
 ## What is the advantage of using using DTOs to separate api from data structure when designing rest endpoints
 
