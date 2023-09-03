@@ -26,4 +26,10 @@ public class CarRequest {
         this.model = c.getModel();
         this.pricePrDay = c.getPricePrDay();
     }
+
+    public CarRequest(String brand, String model, double pricePrDay) {
+        this.brand = brand;
+        this.model = model;
+        this.pricePrDay = pricePrDay;
+    }
 }

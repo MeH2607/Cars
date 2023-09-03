@@ -68,13 +68,17 @@ class CarServiceTest {
 
     @Test
     void addCar() {
-        //TODO hvilen test er bedst?
-        Car c = new Car("BMW", "M8", 80, 8);
-        carService.addCar(new CarRequest(c));
+
+        CarRequest request = CarRequest.builder().
+                brand("BMW").
+                model("M8").
+                pricePrDay(80).
+                build();
+        CarResponse response = carService.addCar(request);
         int dbSize = carRepository.findAll().size();
+        assertEquals("BMW", response.getBrand());
+        assertTrue(carRepository.existsById(3));
         assertEquals(3, dbSize);
-        String newCarBrand = carRepository.findCarById(3).getBrand();
-        assertEquals("BMW", newCarBrand);
     }
 
     @Test
@@ -88,7 +92,6 @@ class CarServiceTest {
     @Test
     void deleteCar() {
         carService.deleteCar(1);
-        int dbSize = carRepository.findAll().size();
-        assertEquals(1, dbSize);
+        assertFalse(carRepository.existsById(1));
     }
 }
