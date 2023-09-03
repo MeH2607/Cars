@@ -1,5 +1,6 @@
 package dat3.car.Service;
 
+import dat3.car.DTO.CarRequest;
 import dat3.car.DTO.CarResponse;
 import dat3.car.entity.Car;
 import dat3.car.repository.CarRepository;
@@ -25,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
 //This test will be using H2 to simulate the database
 @DataJpaTest
 class CarServiceTest {
+    //TODO flere tests
 
     @Autowired
     CarRepository carRepository;
@@ -60,17 +62,33 @@ class CarServiceTest {
 
     @Test
     void getCarsById() {
+        CarResponse response = carService.getCarsById(1);
+        assertEquals(1, response.getId());
     }
 
     @Test
     void addCar() {
+        //TODO hvilen test er bedst?
+        Car c = new Car("BMW", "M8", 80, 8);
+        carService.addCar(new CarRequest(c));
+        int dbSize = carRepository.findAll().size();
+        assertEquals(3, dbSize);
+        String newCarBrand = carRepository.findCarById(3).getBrand();
+        assertEquals("BMW", newCarBrand);
     }
 
     @Test
     void editCar() {
+        CarRequest body = new CarRequest(c1);
+        body.setPricePrDay(60);
+        carService.editCar(body, 1);
+        assertEquals(60, c1.getPricePrDay());
     }
 
     @Test
     void deleteCar() {
+        carService.deleteCar(1);
+        int dbSize = carRepository.findAll().size();
+        assertEquals(1, dbSize);
     }
 }
