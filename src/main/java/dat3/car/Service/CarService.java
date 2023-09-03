@@ -27,7 +27,7 @@ public class CarService {
     public CarResponse getCarsById(int id) {
         Car car = carRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Car with this ID doesn't exist"));
 
-        return new CarResponse(car, false);
+        return new CarResponse(car, true);
     }
 
     public CarResponse addCar(CarRequest body) {
