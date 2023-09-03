@@ -3,10 +3,14 @@ Restful api makes it very easy to set up API endpoints. With http methods like G
 Rest lets you have a stateless database that makes it easily expandable with distributed database systems.
 
 ## What is JSON, and why does JSON fit so well with REST?
-JSON is a format to send and recieve data. The structure of JSON fits well with Rest cause you're able to send and recieve lists of data together and you can costumize what data you want to send or recieve for ressources.
+JSON is a text based format to send and recieve data. The structure of JSON fits well with Rest cause you're able to send and recieve lists of data together and you can costumize what data you want to send or recieve for ressources.
 
 ## How you have designed simple CRUD endpoints using spring boot and DTOs to separate api from data  -> Focus on your use of DTO's
-The way I used DTOs is to have a "response" and a "request" DTO for each entity. The request DTO...
+I've made 2 controller classes, for Cars and Members, which are annotated with the @Controller annotation. I label every endpoint in my controller class with an HTTP method that descripes what CRUD operation it's handling. In the endpoints I call on the Service class for the respective entities which will call the respective Repository methods that handle the calls to the database. 
+
+I use DTOs is to have a "response" and a "request" DTO for each entity to customize the exact data that's being sent to and from my database. 
+The request DTO is the data that I send to my backend, for example when I wanna make a new data entry for my car table. The DTO doesn't include the Id attribute, since that will be created in the database when it recieves the request.
+The response DTO is what we'll recieve back from the database. In this program, we include a boolean variable that determines whether information such as user metadata or data about car deals should be visible.
 
 ## What is the advantage of using using DTOs to separate api from data structure when designing rest endpoints
 
