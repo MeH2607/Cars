@@ -5,11 +5,15 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import dat3.car.entity.Reservation;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -33,6 +37,16 @@ public class Member extends UserWithRoles{
     private String zip;
     private boolean approved;
     private int ranking;
+
+    @OneToMany(mappedBy = "member")
+    private List<Reservation> reservations;
+
+    public void addReservation(Reservation reservation){
+        if(reservation != null){
+            reservations = new ArrayList<>();
+        }
+        reservations.add(reservation);
+    }
 
 
     public Member(String user, String password, String email,

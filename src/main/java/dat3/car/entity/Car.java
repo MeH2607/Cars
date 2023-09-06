@@ -10,6 +10,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -33,6 +35,15 @@ public class Car extends AdminDetails{
     @Column(name = "max_discount")
     private int bestDiscount;
 
+    @OneToMany(mappedBy = "car")
+    private List<Reservation> reservations;
+
+    public void addReservation(Reservation reservation){
+        if(reservation != null){
+            reservations = new ArrayList<>();
+        }
+        reservations.add(reservation);
+    }
 
     public Car(int id, String brand, String model, double pricePrDay) {
         this.id = id;

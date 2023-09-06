@@ -1,0 +1,42 @@
+package dat3.car.Service;
+
+import dat3.car.DTO.ReservationRequest;
+import dat3.car.DTO.ReservationResponse;
+import dat3.car.entity.Car;
+import dat3.car.entity.Member;
+import dat3.car.entity.Reservation;
+import dat3.car.repository.CarRepository;
+import dat3.car.repository.MemberRepository;
+import dat3.car.repository.ReservationRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.time.LocalDate;
+
+@Service
+public class ReservationService {
+    CarRepository carRepository;
+    MemberRepository memberRepository;
+    ReservationRepository reservationRepository;
+
+    public ReservationService(CarRepository carRepository, MemberRepository memberRepository, ReservationRepository reservationRepository) {
+        this.carRepository = carRepository;
+        this.memberRepository = memberRepository;
+        this.reservationRepository = reservationRepository;
+    }
+
+    public ReservationResponse reserveCar(ReservationRequest body) {
+
+        if(body.getDate().isBefore(LocalDate.now())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Reservation date cannot be in the past");
+        }
+        Member member = memberRepository.findById(body.getUserName()).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Member not found"));
+        Car car = carRepository.findById(body.getCarId()).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Car not found"));
+        Reservation reservation = new Reservation(member, car, body.getDate());
+        return new ReservationResponse(reservation);
+    }
+}
