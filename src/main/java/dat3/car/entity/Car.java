@@ -1,6 +1,7 @@
 package dat3.car.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "car")
 public class Car extends AdminDetails{
@@ -32,10 +34,19 @@ public class Car extends AdminDetails{
     private int bestDiscount;
 
 
+    public Car(int id, String brand, String model, double pricePrDay) {
+        this.id = id;
+        this.brand = brand;
+        this.model = model;
+        this.pricePrDay = pricePrDay;
+    }
+
     public Car(String brand, String model, double pricePrDay, int bestDiscount) {
         this.brand = brand;
         this.model = model;
         this.pricePrDay = pricePrDay;
         this.bestDiscount = bestDiscount;
     }
+
+
 }

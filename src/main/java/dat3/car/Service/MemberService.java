@@ -25,7 +25,7 @@ public class MemberService {
 
         List<Member> members = memberRepository.findAll();
 
-        //Gammel måde vi knovertere data type på
+        //Gammel nedern måde vi knoverterer data på
      /* List<MemberResponse> response = new ArrayList<>();
 
         for (Member m : members) {

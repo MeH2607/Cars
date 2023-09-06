@@ -13,24 +13,40 @@ import java.util.List;
 @RequestMapping("api/cars")
 public class CarController {
 
- /*   CarService carService;
+    CarService carService;
 
-    public CarController(CarService carService){
+    public CarController(CarService carService) {
         this.carService = carService;
     }
 
+    //Security : Anonymus
     @GetMapping
-    List<CarResponse> getCars(){
+    List<CarResponse> getCars() {
         return carService.getCars(false);
     }
 
-    @GetMapping(path="/{brand}")
-    CarResponse getCarsByBrand(@PathVariable String brand) throws Exception{
-        return carService.getCarsByBrand(brand);
+    //Security : Anonymus
+    @GetMapping(path = "/{id}")
+    CarResponse getCarsById(@PathVariable int id) throws Exception {
+        return carService.getCarsById(id);
     }
 
+    //Security : Admin
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    CarResponse addCar(@RequestBody CarRequest body){
-        return carService.addCar(body)
-    } */
+    CarResponse addCar(@RequestBody CarRequest body) {
+        return carService.addCar(body);
+    }
+
+    //Security : Admin
+    @PutMapping("/{id}")
+    void editCar(@RequestBody CarRequest body, @PathVariable int id) {
+        carService.editCar(body, id);
+    }
+
+    //Security : Admin
+    @DeleteMapping("/{id}")
+    void deleteCar(@PathVariable int id) {
+        carService.deleteCar(id);
+    }
+
 }
