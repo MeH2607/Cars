@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("api/cars")
 public class CarController {
 
-    CarService carService;
+ /*   CarService carService;
 
     public CarController(CarService carService){
         this.carService = carService;
@@ -32,5 +32,5 @@ public class CarController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     CarResponse addCar(@RequestBody CarRequest body){
         return carService.addCar(body)
-    }
+    } */
 }

@@ -14,9 +14,9 @@ public class CarRequest {
     private String model;
     private double pricePrDay;
 
-    public static Car getCarEntity(CarRequest c){
+  /*  public static Car getCarEntity(CarRequest c){
         return new Car(c.getBrand(), c.getModel(), c.getPricePrDay());
-    }
+    }*/
 
     // Car to CarRequest conversion
     public CarRequest(Car c){
