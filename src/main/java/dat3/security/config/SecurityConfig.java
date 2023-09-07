@@ -77,6 +77,7 @@ public class SecurityConfig {
 
     http.authorizeHttpRequests((authorize) -> authorize
             .requestMatchers(new AntPathRequestMatcher("/api/auth/login", HttpMethod.POST.toString())).permitAll()
+            .requestMatchers(new AntPathRequestMatcher("/api/reservations", HttpMethod.POST.toString())).permitAll()
             .requestMatchers(new AntPathRequestMatcher("/api/user-with-role", HttpMethod.POST.toString())).permitAll()
             .requestMatchers(new AntPathRequestMatcher("/api/demo/anonymous", HttpMethod.GET.toString())).permitAll()
             .requestMatchers(new AntPathRequestMatcher("/*", HttpMethod.GET.toString())).permitAll()

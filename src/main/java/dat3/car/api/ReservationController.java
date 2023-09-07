@@ -15,6 +15,10 @@ public class ReservationController {
 
     ReservationService reservationService;
 
+    public ReservationController(ReservationService reservationService) {
+        this.reservationService = reservationService;
+    }
+
     @PostMapping
     public ReservationResponse makeReservation(@RequestBody ReservationRequest body) {
         return reservationService.reserveCar(body);
