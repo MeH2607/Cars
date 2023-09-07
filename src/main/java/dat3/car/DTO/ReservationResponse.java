@@ -1,15 +1,18 @@
 package dat3.car.DTO;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import dat3.car.entity.Reservation;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor //A must for @Builder
+@Builder  //I will demo it's purpose in the class
+//It's really IMPORTANT that you understand the purpose of this annotation
+@JsonInclude(JsonInclude.Include.NON_NULL) //
 public class ReservationResponse {
 
     private int id;

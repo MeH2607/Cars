@@ -101,7 +101,9 @@ public class DeveloperData implements ApplicationRunner {
         setupUserWithRoleUsers();
 
         Reservation reservation = new Reservation(m1, carList.get(0), LocalDate.now().plusDays(2));
+        Reservation reservation2 = new Reservation(m2, carList.get(1), LocalDate.now().plusDays(50));
         reservationRepository.save(reservation);
+        reservationRepository.save(reservation2);
     }
 
 
@@ -121,10 +123,10 @@ public class DeveloperData implements ApplicationRunner {
         System.out.println("******* REMOVE THIS BEFORE DEPLOYMENT, AND SETUP DEFAULT USERS DIRECTLY  *****");
         System.out.println("**** ** ON YOUR REMOTE DATABASE                 ******************************");
         System.out.println("******************************************************************************");
-        UserWithRoles user1 = new UserWithRoles("user1", encodedPassword, "user1@a.dk");
-        UserWithRoles user2 = new UserWithRoles("user2", encodedPassword, "user2@a.dk");
-        UserWithRoles user3 = new UserWithRoles("user3", encodedPassword, "user3@a.dk");
-        UserWithRoles user4 = new UserWithRoles("user4", encodedPassword, "user4@a.dk");
+        UserWithRoles user1 = new UserWithRoles("user1", passwordUsedByAll, "user1@a.dk");
+        UserWithRoles user2 = new UserWithRoles("user2", passwordUsedByAll, "user2@a.dk");
+        UserWithRoles user3 = new UserWithRoles("user3", passwordUsedByAll, "user3@a.dk");
+        UserWithRoles user4 = new UserWithRoles("user4", passwordUsedByAll, "user4@a.dk");
         user1.addRole(Role.USER);
         user1.addRole(Role.ADMIN);
         user2.addRole(Role.USER);

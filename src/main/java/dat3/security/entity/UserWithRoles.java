@@ -11,6 +11,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,6 +29,9 @@ import java.util.stream.Collectors;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "DISCRIMINATOR_TYPE")
 public class UserWithRoles implements UserDetails {
+
+  @Transient
+  public static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
   @Id
   @Column(nullable = false, length = 50, unique = true)
@@ -67,10 +73,11 @@ public class UserWithRoles implements UserDetails {
 
   public UserWithRoles(String user, String password, String email) {
     this.username = user;
-    if (password.length() < 60) {
+    this.password = passwordEncoder.encode(password);
+
+    if (this.password.length() < 40) {
       throw new IllegalArgumentException("Password must be encoded with bcrypt");
     }
-    this.password = password;
     this.email = email;
   }
 

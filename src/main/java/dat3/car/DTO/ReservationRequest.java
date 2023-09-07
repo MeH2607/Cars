@@ -1,14 +1,16 @@
 package dat3.car.DTO;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
+
 public class ReservationRequest {
 
     private int carId;

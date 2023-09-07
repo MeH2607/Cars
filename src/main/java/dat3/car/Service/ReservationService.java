@@ -36,6 +36,10 @@ public class ReservationService {
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Member not found"));
         Car car = carRepository.findById(body.getCarId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Car not found"));
+
+        if(reservationRepository.existsByCar_idAndReservationDate(car.getId(), body.getDate())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Car is already reserved for this date");
+        }
         Reservation reservation = new Reservation(member, car, body.getDate());
         return new ReservationResponse(reservation);
     }

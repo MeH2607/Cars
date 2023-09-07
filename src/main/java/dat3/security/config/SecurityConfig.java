@@ -23,8 +23,10 @@ import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -41,7 +43,7 @@ public class SecurityConfig {
 
   @Autowired
   CorsConfigurationSource corsConfigurationSource;
-  @Bean
+/*  @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
             .cors().configurationSource(corsConfigurationSource).and()
@@ -55,7 +57,7 @@ public class SecurityConfig {
             .jwt()
             .jwtAuthenticationConverter(authenticationConverter());
 
-  /*  http.authorizeHttpRequests((authorize) -> authorize
+    http.authorizeHttpRequests((authorize) -> authorize
             .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
             .requestMatchers(HttpMethod.POST,"/api/user-with-role").permitAll() //Clients can create a user for themself
 
@@ -68,7 +70,7 @@ public class SecurityConfig {
             .requestMatchers("/error").permitAll()
 
             //Use this to completely disable security (Will not work if endpoints has been marked with @PreAuthorize)
-            .requestMatchers("/", "/**").permitAll());*/
+            .requestMatchers("/", "/**").permitAll());
 
             //This is for demo purposes only, and should be removed for a real system
             //.requestMatchers(HttpMethod.GET, "/api/demouser/user-only").hasAuthority("USER")
@@ -86,32 +88,47 @@ public class SecurityConfig {
     //  .anyRequest().authenticated());
 
     return http.build();
-  }
+  }*/
 
- /* @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+  @Bean
+  public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
+    MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
     http
-            .cors().configurationSource(corsConfigurationSource).and()
-            .csrf().disable()
+            .cors(Customizer.withDefaults()) //Will use the CorsConfigurationSource bean declared in CorsConfig.java
+            .csrf(csrf -> csrf.disable())  //We can disable csrf, since we are using token based authentication, not cookie based
             .httpBasic(Customizer.withDefaults())
             .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .oauth2ResourceServer()
-            .authenticationEntryPoint(new CustomOAuth2AuthenticationEntryPoint())
-            .accessDeniedHandler(new CustomOAuth2AccessDeniedHandler())
-            .jwt()
-            .jwtAuthenticationConverter(authenticationConverter());
-
+            .exceptionHandling((exceptions) -> exceptions
+                    .authenticationEntryPoint(new CustomOAuth2AuthenticationEntryPoint())
+            )
+            .oauth2ResourceServer((oauth2ResourceServer) ->
+                    oauth2ResourceServer
+                            .jwt((jwt) -> jwt.decoder(jwtDecoder())
+                                    .jwtAuthenticationConverter(authenticationConverter())
+                            )
+                            .authenticationEntryPoint(new CustomOAuth2AuthenticationEntryPoint()));
     http.authorizeHttpRequests((authorize) -> authorize
-            .requestMatchers(new AntPathRequestMatcher("/api/auth/login", HttpMethod.POST.toString())).permitAll()
-            .requestMatchers(new AntPathRequestMatcher("/api/user-with-role", HttpMethod.POST.toString())).permitAll()
-            .requestMatchers(new AntPathRequestMatcher("/api/demo/anonymous", HttpMethod.GET.toString())).permitAll()
-            .requestMatchers(new AntPathRequestMatcher("/*", HttpMethod.GET.toString())).permitAll()
-            .requestMatchers(new AntPathRequestMatcher("/error")).permitAll());
-            // ... configure other endpoints as needed
-          //  .anyRequest().authenticated());
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/api/auth/login")).permitAll()
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/api/user-with-role")).permitAll() //Clients can create a user for themself
+
+            //This is for demo purposes only, and should be removed for a real system
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/demo/anonymous")).permitAll()
+
+            //Allow index.html and everything else on root level. So make sure to put ALL your endpoints under /api
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET,"/*")).permitAll()
+
+            .requestMatchers(mvcMatcherBuilder.pattern("/error")).permitAll()
+
+            //Use this to completely disable security (Will not work if endpoints has been marked with @PreAuthorize)
+            .requestMatchers(mvcMatcherBuilder.pattern( "/**")).permitAll()
+
+            //This is for demo purposes only, and should be removed for a real system
+            //.requestMatchers(HttpMethod.GET, "/api/demouser/user-only").hasAuthority("USER")
+            // .requestMatchers(HttpMethod.GET, "/api/demouser/admin-only").hasAuthority("ADMIN")
+            .anyRequest().authenticated());
 
     return http.build();
-  }*/
+  }
 
 
   @Bean
