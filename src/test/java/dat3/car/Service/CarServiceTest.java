@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,22 +31,29 @@ class CarServiceTest {
     @Autowired
     CarRepository carRepository;
     CarService carService;
-    Car c1, c2;
+    Car c1, c2, c3, c4;
 
     @BeforeEach
     void setup() {
         c1 = carRepository.save(new Car("Toyota", "Prius", 50, 2));
         c2 = carRepository.save(new Car("Audi", "Avant", 20, 7));
+        c3 = carRepository.save(new Car("Audi", "A8", 20, 7));
+        c4 = carRepository.save(new Car("Audi", "A9", 40, 6));
+        carRepository.save(c1);
+        carRepository.save(c2);
+        carRepository.save(c3);
+        carRepository.save(c4);
         carService = new CarService(carRepository);
     }
+
 
     @Test
     @Order(1)
     void getCarsLimitedDetails() {
         //testing that the right amount of data is saved
         List<CarResponse> responses = carService.getCars(false);
-        assertEquals(2, responses.size());
-        //Testng that ID is null.
+        assertEquals(4, responses.size());
+        //Testng that ID is null  to test if includeAll works..
         Integer testId = responses.get(1).getId();
         assertNull(testId);
     }
@@ -56,18 +64,19 @@ class CarServiceTest {
 
         //testing that the right amount of data is saved
         List<CarResponse> responses = carService.getCars(true);
-        assertEquals(2, responses.size());
-        //Testng that ID is not null and has a value.
+        assertEquals(4, responses.size());
+        //Testng that ID is not null and has a value to test if includeAll works.
         Integer testId = responses.get(0).getId();
         assertNotNull(testId);
     }
 
     @Test
     @Order(3)
-    void getCarsById() {
-        int id = carRepository.findCarsByBrand("Toyota").getId();
-        CarResponse response = carService.getCarsById(id);
-        assertEquals(id, response.getId());
+    void getCarsByBrand() {
+        List<Car> cars = carRepository.findAllByBrand("Audi");
+        assertEquals(3, cars.size());
+        assertEquals("Audi", cars.get(0).getBrand());
+
     }
 
     @Test
@@ -81,8 +90,7 @@ class CarServiceTest {
         CarResponse response = carService.addCar(request);
         int dbSize = carRepository.findAll().size();
         assertEquals("BMW", response.getBrand());
-        assertTrue(carRepository.existsById(3));
-        assertEquals(3, dbSize);
+        assertEquals(5, dbSize);
     }
 
     @Test
@@ -101,8 +109,15 @@ class CarServiceTest {
         for (CarResponse c : carService.getCars(true)) {
             System.out.println(c.getId());
         }
-        int id = carRepository.findCarsByBrand("Toyota").getId();
+        int id = carRepository.findAll().get(0).getId();
         carService.deleteCar(id);
-        assertFalse(carRepository.existsById(1));
+        assertFalse(carRepository.existsById(id));
+    }
+
+    @Test
+    void averagePricePerDay(){
+        double averageFromServce = carService.getAveragePrice();
+        double hardCodedAverage = (50+20+20+40)/4.0;
+        assertEquals(hardCodedAverage, averageFromServce);
     }
 }

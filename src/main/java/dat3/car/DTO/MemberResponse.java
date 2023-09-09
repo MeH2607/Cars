@@ -7,6 +7,7 @@ import dat3.car.entity.Member;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -31,6 +32,8 @@ public class MemberResponse {
     LocalDateTime edited;
     Integer ranking;
     Boolean approved;
+    List<ReservationResponse> reservations;
+
 
     //Convert Member Entity to Member DTO. Med includeAll kan man styre hvad der skal tilbage
     public MemberResponse(Member m, boolean includeAll) {
@@ -46,6 +49,10 @@ public class MemberResponse {
             this.edited = m.getEdited();
             this.approved = m.isApproved();
             this.ranking = m.getRanking();
+            this.reservations = m.getReservations()
+                    .stream()
+                    .map(reservation -> new ReservationResponse(reservation))
+                    .toList();
         }
     }
 }

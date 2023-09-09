@@ -64,4 +64,10 @@ class MemberController {
     memberService.deleteMemberByUsername(username);
   }
 
+  //TODO Find all members who have made a reservation
+  //Security: Admin
+  @GetMapping(path="/membersWithReservations")
+  List<MemberResponse> getMembersWithReservations(){
+      return memberService.getMembersWithReservations();
+  }
 }

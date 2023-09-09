@@ -26,9 +26,9 @@ public class Car extends AdminDetails{
     @Column(name = "car_ID", unique = true, nullable = false)
     private int id;
 
-    @Column(name = "car_brand", unique = true, length = 50, nullable = false)
+    @Column(name = "car_brand", unique = false, length = 50, nullable = false)
     private String brand;
-    @Column(name = "car_model", unique = true, length = 60, nullable = false)
+    @Column(name = "car_model", unique = false, length = 60, nullable = false)
     private String model;
     @Column(name = "rental_price_day")
     private double pricePrDay;

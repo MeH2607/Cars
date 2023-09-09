@@ -49,4 +49,28 @@ public class CarController {
         carService.deleteCar(id);
     }
 
+    //TODO Find all cars with a certain brand and model
+    //Security: Anonymus
+    @GetMapping(path = "/brand/{brand}")
+    List<CarResponse> getCarByBrand(@PathVariable String brand){
+        return carService.getCarByBrand(brand);
+    }
+
+    //TODO Find all cars that have not been reserved
+    //Security: User
+    @GetMapping(path="/noReservations")
+    List<CarResponse> getCarsWithoutReservations(){
+        return carService.getCarsWithoutReservations();
+    }
+
+    //TODO Find all cars with the best discount
+
+    //TODO Find the average price per day of all cars in the system
+    @GetMapping(path="average")
+    double getAveragePricePerDay(){
+        return carService.getAveragePrice();
+    }
+
+
+
 }

@@ -1,5 +1,6 @@
 package dat3.car.Service;
 
+import dat3.car.DTO.CarResponse;
 import dat3.car.DTO.MemberRequest;
 import dat3.car.DTO.MemberResponse;
 import dat3.car.entity.Member;
@@ -12,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MemberService {
@@ -91,5 +93,10 @@ public class MemberService {
     }
 
 
-
+    public List<MemberResponse> getMembersWithReservations() {
+        return memberRepository.findAll().stream()
+                .filter(member -> !member.getReservations().isEmpty())
+                .map(member -> new MemberResponse(member, true))
+                .collect(Collectors.toList());
+    }
 }

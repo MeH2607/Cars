@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,6 +24,7 @@ class CarRepositoryTest {
             carRepository.deleteAll();
 
             carRepository.save(new Car("Toyota", "Corolla", 50.0, 10));
+            carRepository.save(new Car("Toyota", "Corona", 50.0, 10));
             carRepository.save(new Car("Honda", "Civic", 55.0, 8));
             carRepository.save(new Car("Ford", "Focus", 48.0, 12));
             carRepository.save(new Car("Chevrolet", "Malibu", 60.0, 5));
@@ -36,9 +39,9 @@ class CarRepositoryTest {
         }
     }
 
-  /*  @Test
+    @Test
     void findCarByBrand() {
-        Car car = carRepository.findCarByBrand("Toyota");
-        assertEquals("Toyota", car.getBrand());
-    }**/
+        List<Car> cars = carRepository.findAllByBrand("Toyota");
+        assertEquals(2, cars);
+    }
 }
