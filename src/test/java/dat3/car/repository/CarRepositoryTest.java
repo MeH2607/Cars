@@ -42,6 +42,6 @@ class CarRepositoryTest {
     @Test
     void findCarByBrand() {
         List<Car> cars = carRepository.findAllByBrand("Toyota");
-        assertEquals(2, cars);
+        assertEquals(2, cars.size());
     }
 }
