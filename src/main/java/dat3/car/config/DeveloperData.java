@@ -72,32 +72,6 @@ public class DeveloperData implements ApplicationRunner {
 
 
 
-       /* List<Member> memberList = new ArrayList<>();
-
-        // Adding 20 instances of Member to the memberList
-        memberList.add(new Member("john_doe", "pass123", "john@example.com", "John", "Doe", "Elm Street 123", "Copenhagen", "12345"));
-        memberList.add(new Member("jane_smith", "secret456", "jane@example.com", "Jane", "Smith", "Oak Avenue 456", "Aarhus", "67890"));
-        memberList.add(new Member("peter_jensen", "peterpass", "peter@example.com", "Peter", "Jensen", "Birch Road 789", "Odense", "23456"));
-        memberList.add(new Member("lisa_andersen", "lisa123", "lisa@example.com", "Lisa", "Andersen", "Maple Street 987", "Aalborg", "56789"));
-        memberList.add(new Member("michael_christensen", "michael456", "michael@example.com", "Michael", "Christensen", "Pine Lane 456", "Esbjerg", "34567"));
-        memberList.add(new Member("sophia_nielsen", "sophiapass", "sophia@example.com", "Sophia", "Nielsen", "Cedar Close 654", "Roskilde", "45678"));
-        memberList.add(new Member("martin_pedersen", "martinpass", "martin@example.com", "Martin", "Pedersen", "Willow Way 765", "Kolding", "56789"));
-        memberList.add(new Member("emma_larsen", "emma567", "emma@example.com", "Emma", "Larsen", "Fir Street 543", "Horsens", "67890"));
-        memberList.add(new Member("david_rasmussen", "davidpass", "david@example.com", "David", "Rasmussen", "Spruce Avenue 432", "Randers", "12345"));
-        memberList.add(new Member("olivia_mortensen", "olivia789", "olivia@example.com", "Olivia", "Mortensen", "Holly Road 987", "Vejle", "23456"));
-        memberList.add(new Member("william_petersen", "william123", "william@example.com", "William", "Petersen", "Juniper Lane 678", "Herning", "34567"));
-        memberList.add(new Member("mia_lund", "mia456", "mia@example.com", "Mia", "Lund", "Redwood Close 876", "Silkeborg", "45678"));
-        memberList.add(new Member("alexandra_christiansen", "alexpass", "alexandra@example.com", "Alexandra", "Christiansen", "Cypress Way 765", "Fredericia", "56789"));
-        memberList.add(new Member("oliver_kristensen", "oliver789", "oliver@example.com", "Oliver", "Kristensen", "Rowan Street 543", "Holstebro", "67890"));
-        memberList.add(new Member("emily_johansen", "emily567", "emily@example.com", "Emily", "Johansen", "Hemlock Avenue 432", "Sønderborg", "12345"));
-        memberList.add(new Member("sophie_madsen", "sophiepass", "sophie@example.com", "Sophie", "Madsen", "Palm Road 987", "Hjørring", "23456"));
-        memberList.add(new Member("noah_andreasen", "noah123", "noah@example.com", "Noah", "Andreasen", "Bamboo Lane 678", "Næstved", "34567"));
-        memberList.add(new Member("lucas_olsen", "lucas456", "lucas@example.com", "Lucas", "Olsen", "Mahogany Close 876", "Viborg", "45678"));
-        memberList.add(new Member("amalie_pedersen", "amaliepass", "amalie@example.com", "Amalie", "Pedersen", "Beech Way 765", "Taastrup", "56789"));
-        memberList.add(new Member("mikkel_nielsen", "mikkel789", "mikkel@example.com", "Mikkel", "Nielsen", "Ash Street 543", "Slagelse", "67890"));
-        memberRepository.saveAll(memberList);*/
-
-
         setupUserWithRoleUsers();
 
         Reservation reservation = new Reservation(m1, carList.get(0), LocalDate.now().plusDays(2));
