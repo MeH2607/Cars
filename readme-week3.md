@@ -61,5 +61,6 @@ The con is that we get a mixed table with both UserWithRoles and Members entitie
 ## - how are passwords stored in the database with the changes suggested in part-6 of the exercise
 I use BCryptPasswordEncoder to encrypt the passwords before sending them to the database. The encryption is handled by the application, which means the database will never get the unencrypted password. 
 As an example, the users in DeveloperData are initialised with the password "test12", which looks like this in the database.
+
 ![image](https://github.com/MeH2607/Cars/assets/113069009/58379e93-5ede-42d8-8695-2884d45e92d4)
  
